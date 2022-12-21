@@ -1,6 +1,5 @@
 import paho.mqtt.client as mqtt
 import time
-import json
 import datetime
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,16 +13,16 @@ def on_message(client, userdata, message):
         chambre, couloir, radiateur, salon = str_message.split(" ")
         
         with open("chambre.txt", "a") as f:
-            f.write(f"{chambre}\n")
+            f.write(f"{int(time.time())},{chambre}\n")
             
         with open("couloir.txt", "a") as f:
-            f.write(f"{couloir}\n")
+            f.write(f"{int(time.time())},{couloir}\n")
             
         with open("radiateur.txt", "a") as f:
-            f.write(f"{radiateur}\n")
+            f.write(f"{int(time.time())},{radiateur}\n")
             
         with open("salon.txt", "a") as f:
-            f.write(f"{salon}\n")
+            f.write(f"{int(time.time())},{salon}\n")
             
     except ValueError:
         pass
