@@ -8,9 +8,9 @@ import random
 
 def on_message(client, userdata, message):
     str_message = str(message.payload.decode("utf-8"))
-#    print(str_message)
+    print(str_message)
     try:
-        chambre, couloir, radiateur, salon = str_message.split(" ")
+        chambre, couloir, radiateur, salon, _ = str_message.split(" ")
         
         with open("chambre.txt", "a") as f:
             f.write(f"{int(time.time())},{chambre}\n")
@@ -24,7 +24,7 @@ def on_message(client, userdata, message):
         with open("salon.txt", "a") as f:
             f.write(f"{int(time.time())},{salon}\n")
             
-    except ValueError:
+    except IndexError:
         pass
     
 
