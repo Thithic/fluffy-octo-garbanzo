@@ -1,5 +1,5 @@
 // Create a client instance: Broker, Port, Websocket Path, Client ID
-client = new Paho.MQTT.Client("broker.hivemq.com", Number(8000), "/mqtt", "sfhlzrhdgosjzhf");
+client = new Paho.MQTT.Client("broker.hivemq.com", Number(8884), "/mqtt", "sfhlzrhdgosjzhf");
 
 // set callback handlers
 client.onConnectionLost = function (responseObject) {
@@ -39,7 +39,8 @@ function onConnect(){
 
 // Connect the client, providing an onConnect callback
 client.connect({
-	onSuccess: onConnect
+	onSuccess: onConnect,
+	useSSL: true
 });
 
 
