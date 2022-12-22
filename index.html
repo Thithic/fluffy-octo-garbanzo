@@ -3,11 +3,51 @@
 <html>
 
 	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+		<script src="mqtt_sub.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="style.css">
 		<title>github site test</title>
 	</head>
 
 	<body>
+	
+		<div class="line" id="line1">
+			<div class="tag">
+				<div class="title">
+					Chambre
+				</div>
+				<div id="chambre_temp"></div>
+				<div id="chambre_humi"></div>
+			</div>
+			
+			<div class="tag">
+				<div class="title">
+					Salon
+				</div>
+				<div id="salon_temp"></div>
+				<div id="salon_humi"></div>
+			</div>
+		</div>
+		
+		<div class="line" id="line2">
+			<div class="tag">
+				<div class="title">
+					Couloir
+				</div>
+				<div id="couloir_temp"></div>
+				<div id="couloir_humi"></div>
+			</div>
+			
+			<div class="tag">
+				<div class="title">
+					Radiateur
+				</div>
+				<div id="radiateur_temp"></div>
+				<div id="radiateur_humi"></div>
+			</div>
+		</div>
+	
+	
 		<h1>12 hours graph</h1>
 		<img src="12hours.png" alt="12hours">
 		

@@ -5,3 +5,26 @@ body {
 img {
 	width: 100%;
 }
+
+
+.title {
+	font-size: 15pt;
+	text-align: center;
+}
+
+.tag {
+	border: 1px solid black;
+	border-radius: 10px;
+	margin: 10px;
+	width: 150px;
+	height: 100px;
+}
+
+html {
+	display: flex;
+}
+
+.line {
+	display: flex;
+	flex-direction: row;
+}
