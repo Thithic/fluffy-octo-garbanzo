@@ -1,5 +1,6 @@
 body {
-	width: 95%;
+	/* width: 98%; */
+	/* background-color: grey; */
 }
 
 img {
@@ -8,16 +9,29 @@ img {
 
 
 .title {
-	font-size: 15pt;
+	font-size: 20pt;
 	text-align: center;
+	width: 100%;
 }
 
 .tag {
 	border: 1px solid black;
 	border-radius: 10px;
-	margin: 10px;
-	width: 150px;
-	height: 100px;
+	margin: 2%;
+	padding: 1%;
+	width: 30%;
+	min-height: 100px;
+	max-width: 300px;
+	/* background-color: white; */
+	display: flex;
+	flex-direction: column;
+}
+
+.data {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 
 html {
@@ -27,4 +41,22 @@ html {
 .line {
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
+	/* background-color: #424242; */
+	/* text-align: center; */
+}
+
+.humidite, .temperature {
+	font-size: 18pt;
+	width: 40%;
+	text-align: center;
+	padding-top: 4%;
+	margin: 5px;
+	/* background-color: blue; */
+	min-width: 100px;
+}
+
+div > img {
+	max-width: 20px;
+	height: auto;
 }

@@ -1,5 +1,9 @@
+all_locations = ["chambre", "couloir", "radiateur", "salon"];
+all_types = ["humi", "temp"];
+
 // Create a client instance: Broker, Port, Websocket Path, Client ID
-client = new Paho.MQTT.Client("broker.hivemq.com", Number(8884), "/mqtt", "sfhlzrhdgosjzhf");
+client = new Paho.MQTT.Client("broker.hivemq.com", Number(8884), "/mqtt", "multitc"+Math.floor(Math.random()*1000000));
+
 
 // set callback handlers
 client.onConnectionLost = function (responseObject) {
@@ -11,7 +15,6 @@ client.onMessageArrived = function (message) {
   
   var arr = message.payloadString.split(" ")
 
-  // document.getElementById("msg").innerHTML = message.payloadString;
   document.getElementById("chambre_temp").innerHTML = arr[0]+"°C";
   document.getElementById("couloir_temp").innerHTML = arr[1]+"°C";
   document.getElementById("radiateur_temp").innerHTML = arr[2]+"°C";
@@ -27,12 +30,6 @@ client.onMessageArrived = function (message) {
 function onConnect(){
 	console.log("Connected!");
 	
-	// Publish a Message
-	// var message = new Paho.MQTT.Message("Message Payload");
-	// message.destinationName = "multi/temp/TC-rt";
-	// message.qos = 0;
-	// client.send(message);
-	
 	// subscribe
 	client.subscribe("multi/temp/TC-rt");
 }
@@ -44,3 +41,11 @@ client.connect({
 });
 
 
+window.onload = function() {
+	
+	all_locations.forEach(loc => {
+		all_types.forEach(type => {
+			document.getElementById(loc+"_"+type).innerHTML = '<img src="loader.gif" alt="loader">';
+		});
+	});
+};
