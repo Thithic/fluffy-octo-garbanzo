@@ -168,7 +168,8 @@
 		// Define Layout
 		var layout = {
 			xaxis: {
-				rangeselector: selectorOptions
+				rangeselector: selectorOptions,
+				range: [Date.now() - 12*3600*1000, Date.now()]
 			},
 			yaxis: {title: 'yaxis title'},
 			yaxis2: {
