@@ -10,21 +10,22 @@ def on_message(client, userdata, message):
     str_message = str(message.payload.decode("utf-8"))
     print(str_message)
     try:
-        chambre, couloir, radiateur, salon, _ = str_message.split(" ")
+        chambre, couloir, radiateur, salon, h_chambre, h_couloir, h_radiateur, h_salon, _ = str_message.split(" ")
         
         with open("chambre.txt", "a") as f:
-            f.write(f"{int(time.time())},{chambre}\n")
+            f.write(f"{int(time.time())},{chambre},{h_chambre}\n")
             
         with open("couloir.txt", "a") as f:
-            f.write(f"{int(time.time())},{couloir}\n")
+            f.write(f"{int(time.time())},{couloir},{h_couloir}\n")
             
         with open("radiateur.txt", "a") as f:
-            f.write(f"{int(time.time())},{radiateur}\n")
+            f.write(f"{int(time.time())},{radiateur},{h_radiateur}\n")
             
         with open("salon.txt", "a") as f:
-            f.write(f"{int(time.time())},{salon}\n")
-            
-    except IndexError:
+            f.write(f"{int(time.time())},{salon},{h_salon}\n")
+        
+    except ValueError:
+        print("value error")
         pass
     
 
