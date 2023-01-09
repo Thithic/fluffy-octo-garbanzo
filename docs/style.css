@@ -1,7 +1,3 @@
-img {
-	width: 100%;
-}
-
 .title {
 	font-size: 20pt;
 	text-align: center;
@@ -48,4 +44,19 @@ img {
 div > img {
 	max-width: 20px;
 	height: auto;
+}
+
+button {
+	height: 50px;
+	width: 10%;
+	margin: 10px;
+	font-size: 1em;
+}
+
+#zoom_buttons {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
