@@ -7,7 +7,7 @@ def on_message(client, userdata, message):
     str_message = str(message.payload.decode("utf-8"))
     print(str_message)
     try:
-        chambre, couloir, radiateur, salon, h_chambre, h_couloir, h_radiateur, h_salon, _ = str_message.split(" ")
+        chambre, couloir, radiateur, salon, exterieur, h_chambre, h_couloir, h_radiateur, h_salon, h_exterieur, _ = str_message.split(" ")
         
         current_time = int(time.time())
         
@@ -22,6 +22,9 @@ def on_message(client, userdata, message):
             
         with open("salon.txt", "a") as f:
             f.write(f"{current_time},{salon},{h_salon}\n")
+            
+        with open("exterieur.txt", "a") as f:
+            f.write(f"{current_time},{exterieur},{h_exterieur}\n")
         
     except ValueError:
         print("value error")
