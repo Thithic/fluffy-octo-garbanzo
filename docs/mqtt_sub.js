@@ -1,4 +1,4 @@
-all_locations = ["chambre", "couloir", "radiateur", "salon"];
+all_locations = ["chambre", "couloir", "radiateur", "salon", "exterieur"];
 all_types = ["humi", "temp"];
 
 // Create a client instance: Broker, Port, Websocket Path, Client ID
@@ -19,11 +19,13 @@ client.onMessageArrived = function (message) {
   document.getElementById("couloir_temp").innerHTML = arr[1]+"°C";
   document.getElementById("radiateur_temp").innerHTML = arr[2]+"°C";
   document.getElementById("salon_temp").innerHTML = arr[3]+"°C";
+  document.getElementById("exterieur_temp").innerHTML = arr[4]+"°C";
   
-  document.getElementById("chambre_humi").innerHTML = arr[4]+"%";
-  document.getElementById("couloir_humi").innerHTML = arr[5]+"%";
-  document.getElementById("radiateur_humi").innerHTML = arr[6]+"%";
-  document.getElementById("salon_humi").innerHTML = arr[7]+"%";
+  document.getElementById("chambre_humi").innerHTML = arr[5]+"%";
+  document.getElementById("couloir_humi").innerHTML = arr[6]+"%";
+  document.getElementById("radiateur_humi").innerHTML = arr[7]+"%";
+  document.getElementById("salon_humi").innerHTML = arr[8]+"%";
+  document.getElementById("exterieur_humi").innerHTML = arr[9]+"%";
 }
 
 // Called when the connection is made
