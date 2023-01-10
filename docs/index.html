@@ -5,7 +5,7 @@
 	<head>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 		<script src="mqtt_sub.js" type="text/javascript"></script>
-		<!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+		<script src="https://momentjs.com/downloads/moment.min.js"></script>
 		<script src="echarts.js"></script>
 		<link rel="stylesheet" href="style.css">
 		<title>github site test</title>
@@ -89,55 +89,71 @@
 		
 		<script>
 		
-		var times = []
-		var temps = []
-		var humis = []
+		function get_min_index(value, days_back) {
+			if (days_back === 0) {
+				return value.min
+			}
 		
-		var second_y_axis = [false, false, true, false]
+			let now = new Date()
+			let min_time = new Date(now.getTime() - days_back*24*3600*1000)
+			
+			return min_time
+		}
+		
+		
+		function zoom(days) {
+			option_temperature.xAxis.min = function(value) {
+				return get_min_index(value, days)
+			}
+			option_humidity.xAxis.min = function(value) {
+				return get_min_index(value, days)
+			}
+			temperature_chart.setOption(option_temperature);
+			humidity_chart.setOption(option_humidity);
+		}
+		
+		
+		var second_y_axis = [2]
+		
+		var data_humidity = []
+		var data_temperature = []
 		
 		var series_temperature = []
 		var series_humidity = []
 		
-		var nb_days_back = 5
-		
-		for (let i = 0 ; i < nb_tags ; i++) {
-			times.push([])
-			temps.push([])
-			humis.push([])
-		}
-		
 		tags.forEach((value, index, array) => {
+			
+			data_temperature.push([])
+			data_humidity.push([])
+		
 			value.forEach((line, id, arr) => {
-				let s = line.split(",")
-				let a = new Date(s[0]*1000)
-				let b = s[1]
-				let c = s[2]
+				let _split = line.split(",")
+				let _date = new Date(_split[0]*1000)
+				let _temperature = _split[1]
+				let _humidity = _split[2]
 				
-				times[index].push(a)
-				temps[index].push(b)
-				humis[index].push(c)
+				data_temperature[index].push([_date, _temperature])
+				data_humidity[index].push([_date, _humidity])
 			});
 			
-			// add temperature serie
-			let serie = {}
-			serie.name = labels[index]
-			serie.type = "line"
-			serie.data = temps[index]
-			if (second_y_axis[index] === true) {
-				serie.yAxisIndex = 1
-			}
-			series_temperature.push(serie)
+			series_temperature.push({
+				name: labels[index],
+				type: "line",
+				data: data_temperature[index],
+				symbol: "none",
+				yAxisIndex: (second_y_axis.includes(index) ? 1 : 0)
+			})
 			
-			// add humidity serie
-			serie = {}
-			serie.name = labels[index]
-			serie.type = "line"
-			serie.data = humis[index]
-			series_humidity.push(serie)
+			series_humidity.push({
+				name: labels[index],
+				type: "line",
+				data: data_humidity[index],
+				symbol: 'none'
+			})
 		});
 		
-		var humidity_chart = echarts.init(document.getElementById('humidity_chart'));
 		var temperature_chart = echarts.init(document.getElementById('temperature_chart'));
+		var humidity_chart = echarts.init(document.getElementById('humidity_chart'));
 		
 		var option_temperature = {
 			tooltip: {
@@ -146,31 +162,14 @@
 			legend: {
 				data: labels
 			},
-			toolbox: {
-				left: 'center',
-				itemSize: 25,
-				top: 55,
-				feature: {
-					dataZoom: {
-						yAxisIndex: 'none'
-					},
-					restore: {}
-				}
-			},
 			xAxis: {
-				type: 'category',
-				data: times[0],
+				type: 'time',
 				min: function(value) {
 					return get_min_index(value, 1)
 				},
 				axisLabel: {
 					formatter: function(value, index) {
-						let day = new Date(value).getDate()
-						let month = new Date(value).getMonth() + 1
-						let hour = new Date(value).getHours()
-						let minute = new Date(value).getMinutes()
-						
-						return day+"/"+month+" "+hour+":"+minute
+						return moment(value).format("DD/MM HH:mm")
 					}
 				}
 			},
@@ -185,53 +184,11 @@
 			series: series_temperature
 		}
 		
-		// copy object option_temperature to option_humidity
 		var option_humidity = {... option_temperature}
 		option_humidity.series = series_humidity
 		
 		temperature_chart.setOption(option_temperature);
 		humidity_chart.setOption(option_humidity);
-		
-		function get_min_index(value, days_back) {
-			let now = new Date()
-			let min_time = new Date(now.getTime() - days_back*24*3600*1000)
-			
-			let index = times[0].length - 1
-			
-			while (index > 0) {
-				if (times[0][index] < min_time) {
-					break
-				}
-				index--
-			}
-			
-			return index
-		}
-		
-		
-		function zoom(days) {
-			if (days === 0) {
-				option_temperature.xAxis.min = function(value) {
-					return 0
-				}
-				option_humidity.xAxis.min = function(value) {
-					return 0
-				}
-				temperature_chart.setOption(option_temperature);
-				humidity_chart.setOption(option_humidity);
-			}
-			else {
-				option_temperature.xAxis.min = function(value) {
-					return get_min_index(value, days)
-				}
-				option_humidity.xAxis.min = function(value) {
-					return get_min_index(value, days)
-				}
-				temperature_chart.setOption(option_temperature);
-				humidity_chart.setOption(option_humidity);
-			}
-		}
-		
 		
 		</script>
 		
